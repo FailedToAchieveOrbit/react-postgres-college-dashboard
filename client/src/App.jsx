@@ -1,9 +1,7 @@
-// client/src/App.jsx
 import React, { useEffect, useState } from 'react';
 import { Container, Typography, Grid, Paper, CircularProgress } from '@material-ui/core';
 import { Pie, Bar, Line } from 'react-chartjs-2';
 import api from './services/api';
-import 'chart.js';
 
 function App() {
   const [data, setData] = useState(null);
@@ -13,28 +11,13 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Because api.js has baseURL = 'http://localhost:5000/api'
-        // we only need '/colleges/enrollment', etc.
-        const [
-          collegeRes,
-          majorRes,
-          gpaRes,
-          enrollmentRes,
-          gradesRes
-        ] = await Promise.all([
-          api.get('/colleges/enrollment'),
-          api.get('/users/majors'),
-          api.get('/colleges/department-gpa'),
-          api.get('/classes/course-enrollment'),
-          api.get('/classes/course-grades')
-        ]);
-
+        // TODO: Implement data fetching logic
         setData({
-          enrollmentByCollege: collegeRes.data,  // => [{name, count}, ...]
-          enrollmentByMajor: majorRes.data,      // => [{major, count}, ...]
-          avgGpaByDepartment: gpaRes.data,       // => [{department, avggpa}, ...]
-          courseEnrollment: enrollmentRes.data,  // => [{course, count}, ...]
-          avgGradeByCourse: gradesRes.data       // => [{course, avggrade}, ...]
+          enrollmentByCollege: [],  // Example: [{name: 'College A', count: 100}]
+          enrollmentByMajor: [],    // Example: [{major: 'Major A', count: 50}]
+          avgGpaByDepartment: [],   // Example: [{department: 'Dept A', avggpa: 3.5}]
+          courseEnrollment: [],     // Example: [{course: 'Course A', count: 30}]
+          avgGradeByCourse: []      // Example: [{course: 'Course A', avggrade: 85}]
         });
       } catch (err) {
         setError('Failed to fetch dashboard data');
@@ -67,9 +50,9 @@ function App() {
             <Typography variant="h6">Students per College</Typography>
             <Pie
               data={{
-                labels: data.enrollmentByCollege.map(d => d.name),
+                labels: [], // TODO: Implement data labels
                 datasets: [{
-                  data: data.enrollmentByCollege.map(d => Number(d.count)),
+                  data: [], // TODO: Implement data values
                   backgroundColor: [
                     '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'
                   ]
@@ -86,20 +69,16 @@ function App() {
             <Typography variant="h6">Students per Major</Typography>
             <Bar
               data={{
-                labels: data.enrollmentByMajor.map(d => d.major),
+                labels: [], // TODO: Implement data labels
                 datasets: [{
                   label: 'Number of Students',
-                  data: data.enrollmentByMajor.map(d => Number(d.count)),
+                  data: [], // TODO: Implement data values
                   backgroundColor: '#36A2EB'
                 }]
               }}
               options={{
                 scales: {
-                  yAxes: [{
-                    ticks: {
-                      beginAtZero: true
-                    }
-                  }]
+                  y: { beginAtZero: true }
                 }
               }}
               height={300}
@@ -113,21 +92,19 @@ function App() {
             <Typography variant="h6">Average GPA by Department</Typography>
             <Bar
               data={{
-                labels: data.avgGpaByDepartment.map(d => d.department),
+                labels: [], // TODO: Implement data labels
                 datasets: [{
                   label: 'Average GPA',
-                  data: data.avgGpaByDepartment.map(d => Number(d.avggpa)),
+                  data: [], // TODO: Implement data values
                   backgroundColor: '#FFCE56'
                 }]
               }}
               options={{
                 scales: {
-                  yAxes: [{
-                    ticks: {
-                      beginAtZero: true,
-                      max: 4
-                    }
-                  }]
+                  y: {
+                    beginAtZero: true,
+                    max: 4
+                  }
                 }
               }}
               height={300}
@@ -141,20 +118,16 @@ function App() {
             <Typography variant="h6">Course Enrollment</Typography>
             <Bar
               data={{
-                labels: data.courseEnrollment.map(d => d.course),
+                labels: [], // TODO: Implement data labels
                 datasets: [{
                   label: 'Number of Students',
-                  data: data.courseEnrollment.map(d => Number(d.count)),
+                  data: [], // TODO: Implement data values
                   backgroundColor: '#4BC0C0'
                 }]
               }}
               options={{
                 scales: {
-                  yAxes: [{
-                    ticks: {
-                      beginAtZero: true
-                    }
-                  }]
+                  y: { beginAtZero: true }
                 }
               }}
               height={300}
@@ -168,25 +141,23 @@ function App() {
             <Typography variant="h6">Average Grade by Course</Typography>
             <Line
               data={{
-                labels: data.avgGradeByCourse.map(d => d.course),
+                labels: [], // TODO: Implement data labels
                 datasets: [{
                   label: 'Average Grade',
-                  data: data.avgGradeByCourse.map(d => Number(d.avggrade)),
+                  data: [], // TODO: Implement data values
                   borderColor: '#9966FF',
                   tension: 0.1
                 }]
               }}
               options={{
                 scales: {
-                  yAxes: [{
-                    ticks: {
-                      beginAtZero: true,
-                      max: 5
-                    }
-                  }]
+                  y: {
+                    beginAtZero: true,
+                    max: 100
+                  }
                 }
               }}
-              height={100}
+              height={300}
             />
           </Paper>
         </Grid>
