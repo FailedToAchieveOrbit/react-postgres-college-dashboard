@@ -181,12 +181,12 @@ function App() {
                   yAxes: [{
                     ticks: {
                       beginAtZero: true,
-                      max: 100
+                      max: 5
                     }
                   }]
                 }
               }}
-              height={300}
+              height={100}
             />
           </Paper>
         </Grid>
