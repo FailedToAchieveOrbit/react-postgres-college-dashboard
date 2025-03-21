@@ -13,4 +13,20 @@
     justify-content: center;
     font-size: calc(10px + 2vmin);
   }
-  
+
+.chart-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  min-height: 250px;
+}
+
+canvas {
+  max-width: 100%;
+}
+
+@media screen and (max-width: 600px) {
+  .chart-container {
+    min-height: 200px;
+  }
+}
